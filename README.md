@@ -16,4 +16,10 @@ In the following table, some gestures and the function they perform are shown. I
 
 List of Fingers|Max. Hands|Function|
 |:----:|:----:|:----:|
+[0,1,0,0,0]|1|Move the cursor|
+[0,0,0,0,1]|1|Left click|
+[0,0,0,1,1]|1|Right click|
+[0,0,0,0,0]|1| |
+[0,0,0,0,0]|1| |
+[0,0,0,0,0]|1| |
 
