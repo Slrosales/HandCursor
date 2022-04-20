@@ -1,4 +1,4 @@
-from cvzone.HandTrackingModule import HandDetector
+from HandTrackingModule import HandDetector
 import cv2
 import numpy as np
 import pyautogui
@@ -10,15 +10,14 @@ divLine = 240  # y position of the line
 buttonPressed = False
 bCounter = 0
 bDelay = 15  # Limit on consecutive presses of a single button based of fps
-pTime = 0
-cTime = 0
-
+pTime = 0  # Previews time
+cTime = 0  # Current time
 cap = cv2.VideoCapture(0)
 cap.set(3, wCam)
 cap.set(4, hCam)
 
 # Hand Detector
-detector = HandDetector(detectionCon=0.8, maxHands=2)
+detector = HandDetector(detectionCon=0.8, maxHands=1)
 
 while True:
     success, img = cap.read()
@@ -27,8 +26,6 @@ while True:
     img = cv2.flip(img, 1)  # 1: x flip ; 0: y flip
     cv2.line(img, (0, divLine), (wCam, divLine), (0, 255, 0), 4)
     hands, img = detector.findHands(img, flipType=False)
-    # If flipType is False and the image is flip, the bbox is going to have
-    # the correct header, but now for up thumb is [0] and down thumb is [1]
 
     if hands and buttonPressed is False:
         # 1. Find hand Landmarks
@@ -41,31 +38,31 @@ while True:
         c = 0
         if cy <= divLine: # if hand is at the height of the face
             # left clic is pressed
-            if fingers == [1, 1, 1, 0, 0]:
+            if fingers == [0, 0, 0, 0, 1]:
                 print("Left click")
                 pyautogui.click()
                 buttonPressed = True
 
             # left clic is pressed
-            if fingers == [1, 0, 0, 1, 1]:
+            if fingers == [0, 0, 0, 1, 1]:
                 print("Right click")
                 pyautogui.click(button='right')
                 buttonPressed = True
 
             # key left pressed
-            if fingers == [0, 0, 0, 0, 0]:
+            if fingers == [1, 0, 0, 0, 0]:
                 print("Left")
                 pyautogui.press('left')
                 buttonPressed = True
 
             # key right pressed
-            if fingers == [1, 0, 0, 0, 1]:
+            if fingers == [1, 1, 0, 0, 0]:
                 print("Right")
                 pyautogui.press('right')
                 buttonPressed = True
 
             # key up pressed
-            if fingers == [0, 1, 0, 0, 0]:
+            if fingers == [1, 1, 1, 0, 0]:
                 print("Up")
                 pyautogui.press('up')
                 buttonPressed = True
@@ -77,7 +74,7 @@ while True:
                 buttonPressed = True
 
             # ctrl + z
-            if fingers == [1, 0, 1, 1, 1]:
+            if fingers == [0, 0, 1, 1, 1]:
                 print("ctrl + z")
                 pyautogui.hotkey('ctrl', 'z')
                 buttonPressed = True
@@ -88,6 +85,7 @@ while True:
         if bCounter > bDelay:
             bCounter = 0
             buttonPressed = False
+
 
     # Getting the fps
     cTime = time.time()
