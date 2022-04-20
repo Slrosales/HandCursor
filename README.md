@@ -23,5 +23,12 @@ List of Fingers|Max. Hands|Function|
 [1,1,0,0,0]|1|Right arrow →|
 [1,1,1,0,0]|1|Up arrow ↑|
 [0,1,1,0,0]|1|Down arrow ↓|
+[0,0,1,1,1]|1|Undo (ctlr + z)|
+[0,1,1,0,0]|1|Down scroll*|
+[0,1,1,0,0]|1|Up scroll**|
+
+###### * This function is executed if the distance between the index and middle fingers is greater than 5 px and less than 20 px.
+###### ** This function is executed if the distance between the index and middle finger is greater than 20 px.
+
 
 
