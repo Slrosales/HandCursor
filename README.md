@@ -19,7 +19,9 @@ List of Fingers|Max. Hands|Function|
 [0,1,0,0,0]|1|Move the cursor|
 [0,0,0,0,1]|1|Left click|
 [0,0,0,1,1]|1|Right click|
-[0,0,0,0,0]|1| |
-[0,0,0,0,0]|1| |
-[0,0,0,0,0]|1| |
+[1,0,0,0,0]|1|Left arrow ←|
+[1,1,0,0,0]|1|Right arrow →|
+[1,1,1,0,0]|1|Up arrow ↑|
+[0,1,1,0,0]|1|Down arrow ↓|
+
 
