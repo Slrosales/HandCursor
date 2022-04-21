@@ -31,7 +31,7 @@ cap.set(3, wCam)
 cap.set(4, hCam)
 
 # Hand Detector
-detector = HandDetector(maxHands=1)
+detector = HandDetector(detectionCon=0.8, maxHands=1)
 
 while True:
     success, img = cap.read()
