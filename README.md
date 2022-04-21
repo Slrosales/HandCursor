@@ -60,7 +60,7 @@ List of Fingers|Max. Hands|Function|
 
 # Test
 The following video will let you know how the program works:
-[Virtual Mouse Test](https://drive.google.com/file/d/1mgYfjyp4zMsy7A6t-c86OkYOR6lZY4WO/view?usp=sharing)
++ [Virtual Mouse Test](https://youtu.be/LW9-RoJdhgMg)
 
 If you want to try it, you must install the following libraries in your PC:
 `import cv2`
@@ -68,7 +68,7 @@ If you want to try it, you must install the following libraries in your PC:
 `import pyautogui`
 `import time`
 
-We recommend to install and use [PyCharm](https://www.jetbrains.com/es-es/pycharm/download/#section=windows) IDE for **Community**
++ We recommend installing and use [PyCharm](https://www.jetbrains.com/es-es/pycharm/download/#section=windows) IDE for **Community**
 
 Also, you have to download this repository. You can run the `Draft.py` (without classes and specifics variables values) or the `VirtualMouse.py` (Use classes, but it doesn't have the move function implemented). It's very important import the module `from HandTrackingModule import HandDetector`, do not forget it!
 
