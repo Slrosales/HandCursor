@@ -18,7 +18,7 @@ MediaPipe has the ability to perceive the shape and movement of hands to enhance
 ## [CV Zone](https://www.computervision.zone/)
 CVzone is a computer vision package that facilitates the execution of image processing and artificial intelligence functions. At its core it uses the OpenCV and Mediapipe libraries.
 
-_It includes a module called HandTrackingModule.py, which we will modify to our advantage and implement to simplify the registration of gestures performed by the hand by means of an ordered list with values between 1 and 0._ [More Info ↓](https://github.com/Slrosales/Vrtual-Mouse/edit/main/README.md#commands)
+_It includes a module called HandTrackingModule.py, which we will modify to our advantage and implement to simplify the registration of gestures performed by the hand by means of an ordered list with values between 1 and 0._ [More Info ↓](https://github.com/Slrosales/Vrtual-Mouse#commands)
 
 ## [PyAutoGUI](https://pyautogui.readthedocs.io/en/latest/)
 PyAutoGUI allows Python scripts to control the **mouse and keyboard** to automate interactions with other applications. The API is designed to be simple. PyAutoGUI runs on Windows, macOS and Linux, and runs on Python 2 and 3.
