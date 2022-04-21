@@ -1,7 +1,9 @@
 """
-Hand Tracking Module
-By: Computer Vision Zone
-Website: https://www.computervision.zone/
+    Hand Tracking Module
+    By: Computer Vision Zone
+    Website: https://www.computervision.zone/
+    
+    Edited and adapted by: Jason Estrada and Laura Gómez
 """
 
 import cv2
@@ -73,7 +75,8 @@ class HandDetector:
                 myHand["lmList"] = mylmList
                 myHand["bbox"] = bbox
                 myHand["center"] = (cx, cy)
-
+                
+                # myHand["type"] is flip in order to show the header correctly
                 if flipType:
                     if handType.classification[0].label == "Right":
                         myHand["type"] = "Left"
