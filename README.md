@@ -23,8 +23,8 @@ _It includes a module called HandTrackingModule.py, which we will modify to our 
 ## [PyAutoGUI](https://pyautogui.readthedocs.io/en/latest/)
 PyAutoGUI allows Python scripts to control the **mouse and keyboard** to automate interactions with other applications. The API is designed to be simple. PyAutoGUI runs on Windows, macOS and Linux, and runs on Python 2 and 3.
 
-### UML Package Diagram
-<img src="" width="600" height="200">
+## UML Package Diagram
+<img src="UMLPackage.png" width="600" height="300">
 
 # Commands
 
