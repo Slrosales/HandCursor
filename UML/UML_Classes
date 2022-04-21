@@ -1,0 +1,81 @@
+@startuml
+  Class User{
+    id:None
+    hand: Boolean
+  }
+  
+  Class Camara{
+    wCam = wCam
+    hCam = hCam
+    bDelay: bDelay
+    img: img
+    divLine = divLine
+
+    Line(self, divLine):
+    cv2.line(self.img, (0, divLine), (self.wCam, divLine), (0, 255, 0), 4)
+
+  }
+
+
+  Class Video{
+    wScr, hScr: int
+    wCam, hCam: int
+    divLine: int
+
+    hand = hands[0]
+    cx, cy = hand["center"]
+    lmList = hand["lmList"]
+    drawMode = False
+
+    cap = cv2.VideoCapture(0)
+    cap.set(3, width)
+    cap.set(4, height)
+
+    hands, img = detectorHand.findHands(img)
+    fingers = detectorHand.fingersUp(hand)
+
+    run(self)
+    pyautogui.moveTo(xInd, yInd)
+    pyautogui.click(button = 'right')
+    pyautogui.click()
+    pyautogui.drag(button = 'right')
+    pyautogui.drag()
+    pyautogui.scroll(10)
+    pyautogui.scroll(-10)
+    pyautogui.press('left')
+    pyautogui.press('right')
+  }
+
+  Class Manual{
+    url = string
+
+    __init__(self, wCam, hCam)
+    show(self, url)
+    video = pafy.new(url)
+    best = video.getbest()
+    media = vlc.MediapLyer(best.url)
+    media.play()
+   }
+   
+   
+    Class Draw{
+      drawMode = True
+      drawList = [[]]
+      counter = -1
+      indexFinger = x, y
+      star = False
+
+      x = int(np.interp(lmList[8][0], [width // 2, width], [0, width]))
+      y = int(np.interp(lmList[8][1], [150, height-150], [0, height]))
+
+      cv2.circle(img, indexFinger, 12, (0, 0, 255), cv2.FILLED)
+      drawList.append([])
+      drawList[counter].append(indexFinger)
+  }
+
+
+  User"1" -- "1..*"Video: Al least 1 person with hand
+  Video"1" *-- "1..*"Camara: at least
+  Camara <|-- Manual 
+  Video <|-- Draw 
+@enduml
