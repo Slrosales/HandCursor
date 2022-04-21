@@ -9,6 +9,14 @@ OpenCV is an open source computer vision and machine learning software library. 
 
 _It is used in our project mainly to open the camera, display it in a resized frame and access its functions, as well as to draw on it._
 
+## [MediaPipe](https://google.github.io/mediapipe/solutions/hands)
+MediaPipe has the ability to perceive the shape and movement of hands to enhance the user experience across a variety of domains and technology platforms. The program employs machine learning to infer 21 3D landmarks of a hand from a single frame. While current approaches rely primarily on powerful desktop environments for inference, this method achieves real-time performance on a computer or mobile, and even adapts to multiple hands.
+
+###### 21 hand landmarks
+<img src="https://google.github.io/mediapipe/images/mobile/hand_landmarks.png" width="600" height="200">
+
+## 
+
 # Commands
 
 In the following table, some gestures and the function they perform are shown. It should be noted that in the code, the fingers of a hand are stored in a list of 5 spaces, where:
