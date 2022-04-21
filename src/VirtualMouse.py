@@ -25,6 +25,10 @@ class Manual(Camara):
         media.play()
 """
 
+class Draw(Video):
+    def __init__(self):
+        pass
+
 class Camara:
     def __init__(self, wCam, hCam, bDelay, img):
         self.wCam = wCam
