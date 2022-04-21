@@ -26,8 +26,8 @@ PyAutoGUI allows Python scripts to control the **mouse and keyboard** to automat
 # Commands
 
 In the following table, some gestures and the function they perform are shown. It should be noted that in the code, the fingers of a hand are stored in a list of 5 spaces, where:
-- 1: finger up
-- 0: finger down
+- 1: Finger up
+- 0: Finger down
 - List positions are for:
   - 1st: Thumb
   - 2nd: Index finger
