@@ -13,7 +13,7 @@ import time
 wCam, hCam = 640, 480  # 1280, 720
 wScr, hScr = pyautogui.size()  # Screen size
 divLine = 240  # y position of the line
-frameR = 150 # Frame Reduction
+frame = 150  # Frame Reduction
 
 # Time Var
 bDelay = 15  # Limit on consecutive presses of a single button based of fps
@@ -23,7 +23,7 @@ cTime = 0  # Current time
 
 # Booleans Var
 buttonPressed = False
-pyautogui.FAILSAFE= False  # Allows move the cursor to the bottom of the scr.
+pyautogui.FAILSAFE = False  # Allows move the cursor to the bottom of the scr.
 
 # Video on
 cap = cv2.VideoCapture(0)  # 0: main camera; 1: external camera
@@ -31,7 +31,7 @@ cap.set(3, wCam)
 cap.set(4, hCam)
 
 # Hand Detector
-detector = HandDetector(detectionCon=0.8, maxHands=1)
+detector = HandDetector(maxHands=1)
 
 while True:
     success, img = cap.read()
@@ -53,7 +53,7 @@ while True:
         # print(fingers)
         c = 0
 
-        cv2.rectangle(img, (frameR, frameR), (wCam - frameR, hCam - frameR),
+        cv2.rectangle(img, (frame, frame), (wCam - frame, hCam - frame),
                       (255, 0, 255), 2)
         if cy <= divLine: # if hand is at the height of the face
             # left clic is pressed
@@ -102,11 +102,12 @@ while True:
         if hands and fingers == [0, 1, 0, 0, 0]:
             print("move")
             # Constrain values for move cursor changing the ranges in cam size
-            xInd = np.interp(x1, (frameR, wCam - frameR), (0, wScr))
-            yInd = np.interp(y1, (frameR, hCam - frameR), (0, hScr))
+            xInd = np.interp(x1, (frame, wCam - frame), (0, wScr))
+            yInd = np.interp(y1, (frame, hCam - frame), (0, hScr))
 
             # Move mouse
             pyautogui.moveTo(xInd, yInd)
+            time.sleep(0.0000001)
 
     # Button Pressed iterations
     if buttonPressed:
