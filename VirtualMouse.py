@@ -5,7 +5,10 @@ import pyautogui
 import time
 
 """
-class Manual:
+class Manual(Camara):
+    def __init__(self, wCam, hCam)
+        super().__init__(wCam, hCam)
+        
     def show(self, url):
         video = pafy.new(url)
         best = video.getbest()
