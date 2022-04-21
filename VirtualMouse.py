@@ -1,3 +1,12 @@
+"""
+    In the UML there are classes like "Draw" and "Movement",
+    however it is not in the code because the backend structure is being re-planned.
+    
+    Also, "Manual" is commented because we haven't yet made the interface to play
+    the video guide, so we avoid running the "error" code.
+"""
+
+
 from HandTrackingModule import HandDetector
 import cv2
 import numpy as np
@@ -6,7 +15,7 @@ import time
 
 """
 class Manual(Camara):
-    def __init__(self, wCam, hCam)
+    def __init__(self, wCam, hCam)  # Reusing dimensions
         super().__init__(wCam, hCam)
         
     def show(self, url):
