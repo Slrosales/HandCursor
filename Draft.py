@@ -3,27 +3,35 @@
     So, it has specific values in its varibals
 """
 
-
 from HandTrackingModule import HandDetector
 import cv2
 import numpy as np
 import pyautogui
 import time
 
-# Variables
+# Screen Var
 wCam, hCam = 640, 480  # 1280, 720
+wScr, hScr = pyautogui.size()  # Screen size
 divLine = 240  # y position of the line
-buttonPressed = False
-bCounter = 0
+frameR = 150 # Frame Reduction
+
+# Time Var
 bDelay = 15  # Limit on consecutive presses of a single button based of fps
+bCounter = 0
 pTime = 0  # Previews time
 cTime = 0  # Current time
-cap = cv2.VideoCapture(0)
+
+# Booleans Var
+buttonPressed = False
+pyautogui.FAILSAFE= False  # Allows move the cursor to the bottom of the scr.
+
+# Video on
+cap = cv2.VideoCapture(0)  # 0: main camera; 1: external camera
 cap.set(3, wCam)
 cap.set(4, hCam)
 
 # Hand Detector
-detector = HandDetector(detectionCon=0.8, maxHands=1)
+detector = HandDetector(maxHands=1)
 
 while True:
     success, img = cap.read()
@@ -38,10 +46,15 @@ while True:
         hand = hands[0]
         cx, cy = hand["center"]  # center point of the hand
         lmList = hand["lmList"]  # List of 21 Landmark points
+        x1 = lmList[8][0]
+        y1 = lmList[8][1]
 
         fingers = detector.fingersUp(hand)  # List of which fingers are up
         # print(fingers)
         c = 0
+
+        cv2.rectangle(img, (frameR, frameR), (wCam - frameR, hCam - frameR),
+                      (255, 0, 255), 2)
         if cy <= divLine: # if hand is at the height of the face
             # left clic is pressed
             if fingers == [0, 0, 0, 0, 1]:
@@ -85,13 +98,22 @@ while True:
                 pyautogui.hotkey('ctrl', 'z')
                 buttonPressed = True
 
+        # Move cursor
+        if hands and fingers == [0, 1, 0, 0, 0]:
+            print("move")
+            # Constrain values for move cursor changing the ranges in cam size
+            xInd = np.interp(x1, (frameR, wCam - frameR), (0, wScr))
+            yInd = np.interp(y1, (frameR, hCam - frameR), (0, hScr))
+
+            # Move mouse
+            pyautogui.moveTo(xInd, yInd)
+
     # Button Pressed iterations
     if buttonPressed:
         bCounter += 1
         if bCounter > bDelay:
             bCounter = 0
             buttonPressed = False
-
 
     # Getting the fps
     cTime = time.time()
