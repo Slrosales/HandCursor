@@ -1,3 +1,9 @@
+"""
+    This is a draft of the code without classes because it is adapted to the PC in which we are first implementing.
+    So, it has specific values in its varibals
+"""
+
+
 from HandTrackingModule import HandDetector
 import cv2
 import numpy as np
