@@ -13,61 +13,120 @@ class Manual:
         media.play()
 """
 
-
-class Movement:
-    def __init__(self):
-        pass
-
-
-class Draw(Movement):
-    pass
-
-
 class Camara:
-    def __init__(self, wCam, hCam, bDelay):
+    def __init__(self, wCam, hCam, bDelay, img):
         self.wCam = wCam
         self.hCam = hCam
         self.bDelay = bDelay
+        self.img = img
 
     def Line(self, divLine):
-        self.divLine = divLine
-        cv2.line(img, (0, divLine), (wCam, divLine), (0, 255, 0), 4)
+        cv2.line(self.img, (0, divLine), (self.wCam, divLine), (0, 255, 0), 4)
 
 
-wScr, hScr = pyautogui.size()
-wCam, hCam = int(wScr / 2), int(hScr / 2)
-# print(wCam, hCam)
-divLine = int(hCam / 2)  # y position of the line
+class Video:
+    def __int__(self):
+        pass
 
-cap = cv2.VideoCapture(0)
-cap.set(3, wCam)
-cap.set(4, hCam)
+    def run(self):
+        wScr, hScr = pyautogui.size()
+        wCam, hCam = int(wScr / 2), int(hScr / 2)
+        # print(wCam, hCam)
+        divLine = int(hCam / 2)  # y position of the line
 
-pTime = 0
-cTime = 0
+        cap = cv2.VideoCapture(0)
+        cap.set(3, wCam)
+        cap.set(4, hCam)
 
-# Hand Detector
-detector = HandDetector(maxHands=1)
-while True:
-    success, img = cap.read()
-    img = cv2.flip(img, 1)
-    hands, img = detector.findHands(img, flipType=False)
+        buttonPressed = False
+        bCounter = 0
+        bDelay = 15  # Limit on consecutive presses of a single button based of fps
+        pTime = 0  # Previews time
+        cTime = 0  # Current time
 
-    if hands:
-        move = Movement()
+        # Hand Detector
+        detector = HandDetector(maxHands=1)
+        while True:
+            success, img = cap.read()
+            img = cv2.flip(img, 1)
+            hands, img = detector.findHands(img, flipType=False)
 
-    cTime = time.time()
-    fps = 1 / (cTime - pTime)
-    pTime = cTime
-    cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3,
-                (255, 0, 255), 3)
+            if hands and buttonPressed is False:
+                # 1. Find hand Landmarks
+                hand = hands[0]
+                cx, cy = hand["center"]  # center point of the hand
+                lmList = hand["lmList"]  # List of 21 Landmark points
 
-    bDelay = int(fps / 2)
+                fingers = detector.fingersUp(hand)  # List of which fingers are up
+                # print(fingers)
+                c = 0
+                if cy <= divLine:  # if hand is at the height of the face
+                    # left clic is pressed
+                    if fingers == [0, 0, 0, 0, 1]:
+                        print("Left click")
+                        pyautogui.click()
+                        buttonPressed = True
 
-    camara = Camara(wCam, hCam, bDelay)
-    camara.Line(divLine)
+                    # left clic is pressed
+                    if fingers == [0, 0, 0, 1, 1]:
+                        print("Right click")
+                        pyautogui.click(button='right')
+                        buttonPressed = True
 
-    cv2.imshow("Virtual Mouse", img)
-    key = cv2.waitKey(1)
-    if key == 27:  # Press ESC to close te program
-        break
+                    # key left pressed
+                    if fingers == [1, 0, 0, 0, 0]:
+                        print("Left")
+                        pyautogui.press('left')
+                        buttonPressed = True
+
+                    # key right pressed
+                    if fingers == [1, 1, 0, 0, 0]:
+                        print("Right")
+                        pyautogui.press('right')
+                        buttonPressed = True
+
+                    # key up pressed
+                    if fingers == [1, 1, 1, 0, 0]:
+                        print("Up")
+                        pyautogui.press('up')
+                        buttonPressed = True
+
+                    # key down pressed
+                    if fingers == [0, 1, 1, 0, 0]:
+                        print("Down")
+                        pyautogui.press('down')
+                        buttonPressed = True
+
+                    # ctrl + z
+                    if fingers == [0, 0, 1, 1, 1]:
+                        print("ctrl + z")
+                        pyautogui.hotkey('ctrl', 'z')
+                        buttonPressed = True
+
+            # Button Pressed iterations
+            if buttonPressed:
+                bCounter += 1
+                if bCounter > bDelay:
+                    bCounter = 0
+                    buttonPressed = False
+
+            cTime = time.time()
+            fps = 1 / (cTime - pTime)
+            pTime = cTime
+            cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3,
+                        (255, 0, 255), 3)
+
+            bDelay = int(fps / 2)
+
+            camara = Camara(wCam, hCam, bDelay, img)
+            camara.Line(divLine)
+
+            cv2.imshow("Virtual Mouse", img)
+            key = cv2.waitKey(1)
+            if key == 27:  # Press ESC to close te program
+                break
+
+
+if __name__ == '__main__':
+    video = Video()
+    video.run()
