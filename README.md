@@ -68,9 +68,7 @@ If you want to try it, you must install the following libraries in your PC:
 `import pyautogui`
 `import time`
 
-And it's important to import the module `from HandTrackingModule import HandDetector`
-
-Also, you have to dowload this repository. You can run the `Draft.py` (without classes and specifics variables values) or the `VirtualMouse.py` (Use classes, but it doesn't have the move function implemented)
+Also, you have to download this repository. You can run the `Draft.py` (without classes and specifics variables values) or the `VirtualMouse.py` (Use classes, but it doesn't have the move function implemented). It's very important import the module `from HandTrackingModule import HandDetector`, do not forget it!
 
 
 
