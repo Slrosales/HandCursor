@@ -58,5 +58,9 @@ List of Fingers|Max. Hands|Function|
 ###### * This function is executed if the distance between the index and middle fingers is greater than 5 px and less than 20 px.
 ###### ** This function is executed if the distance between the index and middle finger is greater than 20 px.
 
+# Test
+The following video will let you know how the program works. If you want to try it, you must install the following libraries:
+[Virtual Mouse Test](https://drive.google.com/file/d/1mgYfjyp4zMsy7A6t-c86OkYOR6lZY4WO/view?usp=sharing)
+
 
 
