@@ -20,6 +20,9 @@ CVzone is a computer vision package that facilitates the execution of image proc
 
 _It includes a module called HandTrackingModule.py, which we will modify to our advantage and implement to simplify the registration of gestures performed by the hand by means of an ordered list with values between 1 and 0._ [More Info ↓](https://github.com/Slrosales/Vrtual-Mouse/edit/main/README.md#commands)
 
+## [PyAutoGUI](https://pyautogui.readthedocs.io/en/latest/)
+PyAutoGUI allows Python scripts to control the **mouse and keyboard** to automate interactions with other applications. The API is designed to be simple. PyAutoGUI runs on Windows, macOS and Linux, and runs on Python 2 and 3.
+
 # Commands
 
 In the following table, some gestures and the function they perform are shown. It should be noted that in the code, the fingers of a hand are stored in a list of 5 spaces, where:
