@@ -1,5 +1,5 @@
 """
-    In the UML there are classes like "Draw" and "Movement",
+    In the UML there are classes like "Draw" and "User",
     however it is not in the code because the backend structure is being re-planned.
     
     Also, "Manual" is commented because we haven't yet made the interface to play
