@@ -1,0 +1,62 @@
+@startuml
+package cv2{
+class cv2{
+VideoCapture()
+flip()
+line()
+circle()
+resize()
+imshow()
+wiatkey()
+
+}
+
+}
+package cvzone{
+package mediapipe{
+class Hands{
+
+
+
+__init__(static_image_mode=False, max_num_hands=2,
+min_detection_confidence=0-5, min_tracking_confidence=0.5)
+
+hands = mpHands.Hands()
+mp.solutions.Hands()
+mpDraw = mp.solutions.drawing_utils
+}
+}
+Class HandDetector{
+mylmList = []
+myHand = {}
+myHand["lmList"] = mylmList
+myHand["bbox"] = bbox
+myHand["center"] = (cx, cy)
+myHand["type"] = handType.classification[0].label
+
+__init__(self, mode=False, maxHands=2, detectionCon=0.5, minTrackCon=0.5)
+findHands(self, img, draw=True, flipType=True)
+fingersUp(self, myHand)
+}
+mediapipe..> HandDetector: <<import>>
+
+
+}
+package numpy{
+Class numpy{
+interp()
+}
+
+}
+
+package pyautogui{
+Class pyautogui{
+
+click()
+drag()
+scroll()
+press()
+hotkey()
+}
+}
+@enduml
