@@ -59,8 +59,19 @@ List of Fingers|Max. Hands|Function|
 ###### ** This function is executed if the distance between the index and middle finger is greater than 20 px.
 
 # Test
-The following video will let you know how the program works. If you want to try it, you must install the following libraries:
+The following video will let you know how the program works.
 [Virtual Mouse Test](https://drive.google.com/file/d/1mgYfjyp4zMsy7A6t-c86OkYOR6lZY4WO/view?usp=sharing)
+
+If you want to try it, you must install the following libraries in your PC:
+
+`from HandTrackingModule import HandDetector`
+`import cv2`
+`import numpy as np`
+`import pyautogui`
+`import time`
+
+Also, you have to dowload this repository. You can run the `Draft.py` (without classes and specifics variables values) or the `VirtualMouse.py` (Use classes, but it doesn't have the move function implemented)
+
 
 
 
