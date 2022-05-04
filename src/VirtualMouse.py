@@ -38,6 +38,11 @@ class Camara:
 
     def Line(self, divLine):
         cv2.line(self.img, (0, divLine), (self.wCam, divLine), (0, 255, 0), 4)
+        
+   
+class Presentation(Video):
+    
+class Gaming(Video):
 
 
 class Video:
