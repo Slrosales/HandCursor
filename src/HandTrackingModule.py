@@ -10,7 +10,6 @@ import cv2
 import mediapipe as mp
 import math
 
-
 class HandDetector:
     """
     Finds Hands using the mediapipe library. Exports the landmarks
@@ -54,7 +53,7 @@ class HandDetector:
         if self.results.multi_hand_landmarks:
             for handType, handLms in zip(self.results.multi_handedness, self.results.multi_hand_landmarks):
                 myHand = {}
-                ## lmList
+                # lmList
                 mylmList = []
                 xList = []
                 yList = []
@@ -64,7 +63,7 @@ class HandDetector:
                     xList.append(px)
                     yList.append(py)
 
-                ## bbox
+                # bbox
                 xmin, xmax = min(xList), max(xList)
                 ymin, ymax = min(yList), max(yList)
                 boxW, boxH = xmax - xmin, ymax - ymin
@@ -75,26 +74,25 @@ class HandDetector:
                 myHand["lmList"] = mylmList
                 myHand["bbox"] = bbox
                 myHand["center"] = (cx, cy)
-                
-                # myHand["type"] is flip in order to show the header correctly
+
                 if flipType:
                     if handType.classification[0].label == "Right":
-                        myHand["type"] = "Left"
-                    else:
                         myHand["type"] = "Right"
+                    else:
+                        myHand["type"] = "Left"
                 else:
                     myHand["type"] = handType.classification[0].label
                 allHands.append(myHand)
 
-                ## draw
+                # draw
                 if draw:
                     self.mpDraw.draw_landmarks(img, handLms,
                                                self.mpHands.HAND_CONNECTIONS)
-                    cv2.rectangle(img, (bbox[0] - 20, bbox[1] - 20),
+                    """ cv2.rectangle(img, (bbox[0] - 20, bbox[1] - 20),
                                   (bbox[0] + bbox[2] + 20, bbox[1] + bbox[3] + 20),
                                   (255, 0, 255), 2)
                     cv2.putText(img, myHand["type"], (bbox[0] - 30, bbox[1] - 30), cv2.FONT_HERSHEY_PLAIN,
-                                2, (255, 0, 255), 2)
+                                2, (255, 0, 255), 2) """
         if draw:
             return allHands, img
         else:
@@ -113,14 +111,14 @@ class HandDetector:
             # Thumb
             if myHandType == "Right":
                 if myLmList[self.tipIds[0]][0] > myLmList[self.tipIds[0] - 1][0]:
-                    fingers.append(1)
-                else:
                     fingers.append(0)
+                else:
+                    fingers.append(1)
             else:
                 if myLmList[self.tipIds[0]][0] < myLmList[self.tipIds[0] - 1][0]:
-                    fingers.append(1)
-                else:
                     fingers.append(0)
+                else:
+                    fingers.append(1)
 
             # 4 Fingers
             for id in range(1, 5):
