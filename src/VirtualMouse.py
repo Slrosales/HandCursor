@@ -16,14 +16,18 @@ class Draw(Video):
         pass
 
 class Camara:
-    def __init__(self, wCam, hCam, bDelay, img):
-        self.wCam = wCam
-        self.hCam = hCam
-        self.bDelay = bDelay
+    def __init__(self, img, screen_x_fin, screen_y_fin, delay):
         self.img = img
+        self.screen_x_ini = 0
+        self.screen_y_ini = 0
+        self.screen_x_fin = screen_x_fin
+        self.screen_x_fin = screen_y_fin
+        self.xy_ini = 100
+        self.delay = delay
+        self.aspect_ratio_scr = (screen_x_fin - screen_x_ini) / (screen_y_fin - screen_y_ini)
 
-    def Line(self, divLine):
-        cv2.line(self.img, (0, divLine), (self.wCam, divLine), (0, 255, 0), 4)
+    def line(self, div_line):
+        cv2.line(self.img, (0, div_line), (self.cam_width, div_line), (0, 255, 0), 4)
         
    
 class Presentation(Video):
