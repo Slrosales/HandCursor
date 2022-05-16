@@ -10,121 +10,134 @@ import pyautogui
 import time
 
 # Screen Var
-wCam, hCam = 640, 480  # 1280, 720
-wScr, hScr = pyautogui.size()  # Screen size
-divLine = 240  # y position of the line
-frame = 150  # Frame Reduction
+width_scr, height_scr = pyautogui.size()  # Screen size
+DIV_LINE = 250 # y position of the line
 
 # Time Var
-bDelay = 15  # Limit on consecutive presses of a single button based of fps
-bCounter = 0
-pTime = 0  # Previews time
-cTime = 0  # Current time
+DELAY = 15  # Limit on consecutive presses of a single button based of fps
+counter = 0
+prev_time = 0
+current_time = 0
+
+# Screen Points
+SCREEN_X_INI = 0
+SCREEN_Y_INI = 0
+SCREEN_X_FIN = 1920
+SCREEN_Y_FIN = 1080
+
+# screen aspect ratio
+aspect_ratio_scr = (SCREEN_X_FIN - SCREEN_X_INI) / (SCREEN_Y_FIN - SCREEN_Y_INI)
+XY_INI = 100
 
 # Booleans Var
-buttonPressed = False
+button_pressed = False
 pyautogui.FAILSAFE = False  # Allows move the cursor to the bottom of the scr.
 
 # Video on
-cap = cv2.VideoCapture(0)  # 0: main camera; 1: external camera
-cap.set(3, wCam)
-cap.set(4, hCam)
+cap = cv2.VideoCapture(1)  # 0: main camera; 1: external camera
 
 # Hand Detector
 detector = HandDetector(maxHands=1)
 
 while True:
     success, img = cap.read()
+    if not success:
+        break
 
     # Image corrections
+    cam_height, cam_width, channel = img.shape  # Cam dimensions
     img = cv2.flip(img, 1)  # 1: x flip ; 0: y flip
-    cv2.line(img, (0, divLine), (wCam, divLine), (0, 255, 0), 4)
+    cv2.line(img, (0, DIV_LINE), (cam_width, DIV_LINE), (0, 255, 0), 4)  # Line to divide the img
     hands, img = detector.findHands(img, flipType=False)
 
-    if hands and buttonPressed is False:
+    # Auxiliary image area
+    area_width = cam_width - XY_INI * 2
+    area_height = int(area_width / aspect_ratio_scr)
+
+    image_rect = np.zeros(img.shape, np.uint8)  # new cap with black background
+    image_rect = cv2.rectangle(image_rect, (XY_INI, XY_INI), (XY_INI + area_width, XY_INI + area_height),
+                               (255, 0, 0), -1)
+    output = cv2.addWeighted(img, 1, image_rect, 0.7, 0)
+
+    if hands and button_pressed is False:
         # 1. Find hand Landmarks
         hand = hands[0]
         cx, cy = hand["center"]  # center point of the hand
         lmList = hand["lmList"]  # List of 21 Landmark points
-        x1 = lmList[8][0]
-        y1 = lmList[8][1]
+
+        xInd = int(np.interp(lmList[8][0], (XY_INI, XY_INI + area_width), (SCREEN_X_INI, SCREEN_X_FIN)))
+        yInd = int(np.interp(lmList[8][1], (XY_INI, XY_INI + area_height), (SCREEN_Y_INI, SCREEN_Y_FIN)))
 
         fingers = detector.fingersUp(hand)  # List of which fingers are up
-        # print(fingers)
-        c = 0
 
-        cv2.rectangle(img, (frame, frame), (wCam - frame, hCam - frame),
-                      (255, 0, 255), 2)
-        if cy <= divLine: # if hand is at the height of the face
+        # Move cursor
+        if hands and fingers == [0, 1, 0, 0, 0]:
+            print("move")
+            # Move mouse
+            pyautogui.moveTo(xInd, yInd)
+            # time.sleep(0.00001)
+
+        if cy <= DIV_LINE: # if hand is at the height of the face
             # left clic is pressed
             if fingers == [0, 0, 0, 0, 1]:
                 print("Left click")
                 pyautogui.click()
-                buttonPressed = True
+                button_pressed = True
 
             # left clic is pressed
             if fingers == [0, 0, 0, 1, 1]:
                 print("Right click")
                 pyautogui.click(button='right')
-                buttonPressed = True
+                button_pressed = True
 
             # key left pressed
             if fingers == [1, 0, 0, 0, 0]:
                 print("Left")
                 pyautogui.press('left')
-                buttonPressed = True
+                button_pressed = True
 
             # key right pressed
             if fingers == [1, 1, 0, 0, 0]:
                 print("Right")
                 pyautogui.press('right')
-                buttonPressed = True
+                button_pressed = True
 
             # key up pressed
             if fingers == [1, 1, 1, 0, 0]:
                 print("Up")
                 pyautogui.press('up')
-                buttonPressed = True
+                button_pressed = True
 
             # key down pressed
             if fingers == [0, 1, 1, 0, 0]:
                 print("Down")
                 pyautogui.press('down')
-                buttonPressed = True
+                button_pressed = True
 
             # ctrl + z
             if fingers == [0, 0, 1, 1, 1]:
                 print("ctrl + z")
                 pyautogui.hotkey('ctrl', 'z')
-                buttonPressed = True
-
-        # Move cursor
-        if hands and fingers == [0, 1, 0, 0, 0]:
-            print("move")
-            # Constrain values for move cursor changing the ranges in cam size
-            xInd = np.interp(x1, (frame, wCam - frame), (0, wScr))
-            yInd = np.interp(y1, (frame, hCam - frame), (0, hScr))
-
-            # Move mouse
-            pyautogui.moveTo(xInd, yInd)
-            time.sleep(0.0000001)
+                button_pressed = True
 
     # Button Pressed iterations
-    if buttonPressed:
-        bCounter += 1
-        if bCounter > bDelay:
-            bCounter = 0
-            buttonPressed = False
+    if button_pressed:
+        counter += 1
+        if counter > DELAY:
+            counter = 0
+            button_pressed = False
 
     # Getting the fps
-    cTime = time.time()
-    fps = 1 / (cTime - pTime)
-    pTime = cTime
+    current_time = time.time()
+    fps = 1 / (current_time - prev_time)
+    prev_time = current_time
 
-    cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3,
+    cv2.putText(output, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3,
                 (255, 0, 255), 3)
 
-    cv2.imshow("Virtual Mouse", img)
+    cv2.imshow("Virtual Mouse", output)
+
     key = cv2.waitKey(1)
     if key == 27:  # Press ESC to close te program
         break
+cv2.destroyAllWindows()
