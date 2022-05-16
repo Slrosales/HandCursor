@@ -1,9 +1,7 @@
 """
     In the UML there are classes like "Draw" and "User",
     however it is not in the code because the backend structure is being re-planned.
-    
-    Also, "Manual" is commented because we haven't yet made the interface to play
-    the video guide, so we avoid running the "error" code.
+
 """
 
 
@@ -12,18 +10,6 @@ import cv2
 import numpy as np
 import pyautogui
 import time
-
-"""
-class Manual(Camara):
-    def __init__(self, wCam, hCam)  # Reusing dimensions
-        super().__init__(wCam, hCam)
-        
-    def show(self, url):
-        video = pafy.new(url)
-        best = video.getbest()
-        media = vlc.MedipLyer(best.url)
-        media.play()
-"""
 
 class Draw(Video):
     def __init__(self):
