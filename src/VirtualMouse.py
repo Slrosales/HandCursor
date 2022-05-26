@@ -192,3 +192,4 @@ while True:
     key = cv2.waitKey(1)
     if key == 27:  # Press ESC to close te program
         break
+cv2.destroyAllWindows()   
