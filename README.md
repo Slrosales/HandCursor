@@ -54,10 +54,8 @@ List of Fingers|Max. Hands|Function|
 
 # Test
 If you want to try it, you must install the following libraries in your PC:
-`import cv2`
-`import numpy as np`
-`import pyautogui`
-`import time`
+`pip install mediapipe`
+`pip install PyAutoGUI`
 
 + We recommend installing and use [PyCharm](https://www.jetbrains.com/es-es/pycharm/download/#section=windows) IDE for **Community**
 + To clone the repository, click on the green button and copy the link of the repository
