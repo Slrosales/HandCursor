@@ -52,13 +52,7 @@ List of Fingers|Max. Hands|Function|
 [0,1,1,0,0]|1|Down arrow ↓|
 
 
-###### * This function is executed if the distance between the index and middle fingers is greater than 5 px and less than 20 px.
-###### ** This function is executed if the distance between the index and middle finger is greater than 20 px.
-
 # Test
-The following video will let you know how the program works:
-+ [Virtual Mouse Test](https://youtu.be/LW9-RoJdhgMg)
-
 If you want to try it, you must install the following libraries in your PC:
 `import cv2`
 `import numpy as np`
@@ -66,8 +60,13 @@ If you want to try it, you must install the following libraries in your PC:
 `import time`
 
 + We recommend installing and use [PyCharm](https://www.jetbrains.com/es-es/pycharm/download/#section=windows) IDE for **Community**
-
-Also, you have to download this repository. You can run the `Draft.py` (without classes and specifics variables values) or the `VirtualMouse.py` (Use classes, but it doesn't have the move function implemented). It's very important import the module `from HandTrackingModule import HandDetector`, do not forget it!
++ To clone the repository, click on the green button and copy the link of the repository
++ Back in Pycharm, click on VCS 
++ Click on version control
++ Paste the link and choose the directory
++ Click on clone
++ The libraries to install will be underlined, when you click on them the install button will appear.
++ After installing the libraries, you can run the program.
 
 
 
