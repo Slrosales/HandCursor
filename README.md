@@ -23,11 +23,8 @@ _It includes a module called HandTrackingModule.py, which we will modify to our 
 ## [PyAutoGUI](https://pyautogui.readthedocs.io/en/latest/)
 PyAutoGUI allows Python scripts to control the **mouse and keyboard** to automate interactions with other applications. The API is designed to be simple. PyAutoGUI runs on Windows, macOS and Linux, and runs on Python 2 and 3.
 
-## UML Package Diagram
-<img src="UMLPackage.png" width="700" height="360">
-
 ## UML Classes Diagram
-<img src="UMLClasses.png" width="600" height="750">
+<img src="UML_Classes.png" width="891" height="526">
 
 
 # Commands
@@ -44,16 +41,14 @@ In the following table, some gestures and the function they perform are shown. I
 
 List of Fingers|Max. Hands|Function|
 |:----:|:----:|:----:|
-[0,1,0,0,0]|1|Move the cursor|
-[0,0,0,0,1]|1|Left click|
-[0,0,0,1,1]|1|Right click|
+[0,0,0,0,1]|1|Move the cursor|
+[0,0,0,1,1]|1|Left click|
+[0,0,1,1,1]|1|Right click|
 [1,0,0,0,0]|1|Left arrow ←|
 [1,1,0,0,0]|1|Right arrow →|
 [1,1,1,0,0]|1|Up arrow ↑|
 [0,1,1,0,0]|1|Down arrow ↓|
-[0,0,1,1,1]|1|Undo (ctlr + z)|
-[0,1,1,0,0]|1|Down scroll*|
-[0,1,1,0,0]|1|Up scroll**|
+
 
 ###### * This function is executed if the distance between the index and middle fingers is greater than 5 px and less than 20 px.
 ###### ** This function is executed if the distance between the index and middle finger is greater than 20 px.
