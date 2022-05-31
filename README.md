@@ -26,6 +26,8 @@ PyAutoGUI allows Python scripts to control the **mouse and keyboard** to automat
 ## UML Classes Diagram
 <img src="UML_Classes.png" width="891" height="526">
 
+## UML Use case
+<img src="UML_case_use.png" width="361" height="511">
 
 # Commands
 
