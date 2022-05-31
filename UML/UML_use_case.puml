@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+actor "User with a hand" as fc
+rectangle HandCursor {
+  usecase "Clic derecho" as UC1
+  usecase "Clic izquierdo" as UC2
+  usecase "Flecha arriba" as UC3
+usecase "Flecha abajo" as UC4
+usecase "Flecha izquierda" as UC5
+usecase "Flecha derecha" as UC6
+usecase "Mover el cursor" as UC7
+}
+fc --> UC1
+fc --> UC2
+fc --> UC3
+fc --> UC4
+fc --> UC5
+fc --> UC6
+fc --> UC7
+@enduml
