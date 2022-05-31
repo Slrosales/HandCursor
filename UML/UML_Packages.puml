@@ -1,56 +1,99 @@
 @startuml
-  package cv2{
-    class cv2{
-      VideoCapture()
-      flip()
-      line()
-      circle()
-      resize()
-      imshow()
-      wiatkey()
-    }
-  }
 
+package scr_settings{
+class Dimensions{
+int height: height
+int width: width
+}
 
-  package cvzone{
-    package mediapipe{
-      class Hands{
-        __init__(static_image_mode=False, max_num_hands=2,
-        min_detection_confidence=0-5, min_tracking_confidence=0.5)
-        mpDraw = mp.solutions.drawing_utils
+class TimeV{
+int prev_time: 0
+int current_time: 0
+int fps_: 0
 
-        hands = mpHands.Hands()
-        mp.solutions.Hands()
-       }
-     }
-      class HandDetector{
-        mylmList = []
-        myHand = {}
-        myHand["lmList"] = mylmList
-        myHand["bbox"] = bbox
-        myHand["center"] = (cx, cy)
-        myHand["type"] = handType.classification[0].label
+calc_fps(): return int fps_
+}
 
-        __init__(self, mode=False, maxHands=2, detectionCon=0.5, minTrackCon=0.5)
-        findHands(self, img, draw=True, flipType=True)
-        fingersUp(self, myHand)
-      }
-      mediapipe..> HandDetector: <<import>>
-   }
-      package numpy{
-      Class numpy{
-      interp()
-    }
-  }
+note right of TimeV::prev_time
+Valores predeterminados de la clase
+end note
 
+class ScreenPoints{
+int x0: 0
+int y0: 0
+int x: 1920
+int y: 1080
+}
 
-  package pyautogui{
-    Class pyautogui{
-      click()
-      drag()
-      scroll()
-      press()
-      hotkey()
-    }
-  }
+note right of ScreenPoints::x0
+Valores predeterminados de la clase
+end note
+
+class Start{
+turn_video_on(): return cv2.VideoCapture(cam)
+define_fps(fps): return int delay
+}
+}
+
+package HandTrackingModule{
+class HandDetector{
+boolean mode: False
+int maxHands: 2
+float detectionCon: 0.5
+float minTrackCon: 0.5
+
+mpHands: mp.solutions.hands
+hands: mpHands.Hands
+mpDraw: mp.solutions.drawing_utils
+
+list tipIds: [4, 8, 12, 16, 20]
+list lmList: []
+list fingers: []
+
+find_hands(img, draw=True, flipType=True): return list allHands
+fingers_up(my_hand): return list fingers
+find_distance(p1, p2, img=None): return length, info
+}
+
+class Moves{
+move_cursor(fingers, x_ind, y_ind)
+finger_acc(cy, fingers)
+}
+}
+Start *-- ScreenPoints
+Start <.. Dimensions
+TimeV <.. Start
+HandDetector o-- Moves
+
+package main <<rectangle>>{
+interface main{
+int XY_INI: 100
+int DELAY_COUNT: 0
+int DIV_LINE: 250
+
+Boolean BUTTON_PRESSED: False
+
+hand: hands[0]
+cx, cy: hand["center"]
+lmLis: hand["lmList"]
+
+screen: scs.Dimensions(pyautogui.size()[1], pyautogui.size()[0])
+camera: scs.Start()
+cap: camera.turn_video_on()
+screen_points: scs.ScreenPoints(x=screen.width, y=screen.height)
+
+time_v: scs.TimeV()
+fps: time_v.calc_fps()
+delay: camera.define_fps(fps)
+
+detector: HandDetector(maxHands=1)
+moves: Moves()
+success, img: cap.read()
+output: cv2.addWeighted(img, 1, image_rect, 0.7, 0)
+}
+}
+
+HandTrackingModule..> main: <<import>>
+scr_settings..> main: <<import>>
+
 @enduml
