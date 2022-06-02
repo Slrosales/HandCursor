@@ -1,6 +1,7 @@
 """
 Hand Tracking Module
 By: Computer Vision Zone
+Website: https://www.computervision.zone/
 
 Edited and adapted by: Jason Estrada and Laura Gómez
 
