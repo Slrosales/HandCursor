@@ -1,9 +1,12 @@
 """
 Hand Tracking Module
 By: Computer Vision Zone
-Website: https://www.computervision.zone/
 
 Edited and adapted by: Jason Estrada and Laura Gómez
+
+The modification of the module focused on reading the commands
+that the hands can perform, obtaining coordinates and drawing
+on the camera frame.
 """
 
 import math
@@ -91,13 +94,6 @@ class HandDetector:
                 if draw:
                     self.mpDraw.draw_landmarks(img, handLms,
                                                self.mpHands.HAND_CONNECTIONS)
-                    """
-                    cv2.rectangle(img, (bbox[0] - 20, bbox[1] - 20),
-                                  (bbox[0] + bbox[2] + 20, bbox[1] + bbox[3] + 20),
-                                  (255, 0, 255), 2)
-                    cv2.putText(img, myHand["type"], (bbox[0] - 30, bbox[1] - 30), cv2.FONT_HERSHEY_PLAIN,
-                                2, (255, 0, 255), 2)
-                    """
         if draw:
             return allHands, img
         else:
