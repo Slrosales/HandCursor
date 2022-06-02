@@ -1,8 +1,7 @@
 <div align="center">
-img src="UML_Classes.png" width="891" height="526"
-  <a href="https://github.com/Slrosales/HandCursor">
-    <img src="Hand Cursor.png">
- </a>
+  <h1>
+    Hand Cursor
+  </h1>
 
   
    <h4>
