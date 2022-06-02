@@ -1,3 +1,21 @@
+<div align="center">
+img src="UML_Classes.png" width="891" height="526"
+  <a href="https://github.com/Slrosales/HandCursor">
+    <img src="Hand Cursor.png">
+ </a>
+
+  
+   <h4>
+     Another form of using the dart
+   </h4>
+
+ [![GitHub](https://img.shields.io/badge/by-Slrosales-red)](https://github.com/Slrosales)
+ [![GitHub](https://img.shields.io/badge/by-JasonEstrada-green)](https://github.com/JasonEstrada)
+ 
+  [![Python Version](https://img.shields.io/badge/python-%3E%3D3.10.4-blue)](https://www.python.org/downloads/release/python-3104/)
+     
+</div>
+
 # Introduction
 
 Technology advances and innovates with the intention of making our daily lives easier. For example, one day you have an important presentation and you already have the slides projected on the board, but you forgot the control that allows you to control the presentation remotely. Instead of approaching the PC every now and then to change the slide, you can open the virtual mouse software, which has the purpose of speeding up certain behaviors when using the computer, and at a certain level, replacing the physical mouse and integrating some of the keyboard's own functionalities to: move the slide forward or backward, move the cursor on the screen, click on the buttons, make annotations, etc. From a distance, since its usefulness consists in detecting human hand gestures and the one with the fuchsia or green fluorecent handle through the camera in real time to perform certain tasks. All of this, thanks to libraries and trained modules such as OpenCV, CVzone, MediaPipe and PyAutoGUI.
