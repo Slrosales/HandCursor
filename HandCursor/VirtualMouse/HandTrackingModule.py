@@ -162,52 +162,54 @@ class Moves:
     def __init__(self):
         pass
 
-    def move_cursor(self, fingers, x_ind, y_ind):
+    def move_cursor(self, fingers, x_ind, y_ind, bool):
         """
             If index finger is up, the cursor will move
             :param fingers: List of which fingers are up
             :param x_ind: x-coordinate of linear interpolation
             :param y_ind: y-coordinate of linear interpolation
+            :param bool: active or not active the action
         """
-        if fingers == [0, 1, 0, 0, 0]:
+        if fingers == [0, 1, 0, 0, 0] and bool == 1:
             # print("move")
             pyautogui.moveTo(x_ind, y_ind)
 
-    def finger_acc(self, cy, fingers):
+    def finger_acc(self, cy, fingers, bool):
         """
             Depending on the fingers that are raised,
             a mouse or keyboard action will be executed.
             :param cy: y-coordinate of the center point of the hand
             :param fingers: List of which fingers are up
+            :param bool: active or not active the action
         """
         if cy <= 250:  # if hand is at the height of the face
             # left clic is pressed
-            if fingers == [0, 0, 0, 0, 1]:
+            if fingers == [0, 0, 0, 0, 1] and bool[1] == 1:
                 # print("Left click")
                 pyautogui.click()
 
             # right clic is pressed
-            if fingers == [0, 0, 0, 1, 1]:
+            if fingers == [0, 0, 0, 1, 1] and bool[2] == 1:
                 # print("Right click")
                 pyautogui.click(button='right')
 
             # key left pressed
-            if fingers == [1, 0, 0, 0, 0]:
+            if fingers == [1, 0, 0, 0, 0] and bool[3] == 1:
                 # print("Left")
                 pyautogui.press('left')
 
             # key right pressed
-            if fingers == [0, 0, 1, 1, 1]:
+            if fingers == [1, 1, 0, 0, 0] and bool[4] == 1:
                 # print("Right")
                 pyautogui.press('right')
 
             # key up pressed
-            if fingers == [1, 1, 1, 0, 0]:
+            if fingers == [1, 1, 1, 0, 0] and bool[5] == 1:
                 # print("Up")
                 pyautogui.press('up')
 
                 # key down pressed
-            if fingers == [0, 1, 1, 0, 0]:
+            if fingers == [0, 1, 1, 0, 0] and bool[6] == 1:
                 # print("Down")
                 pyautogui.press('down')
 
