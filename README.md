@@ -30,7 +30,7 @@ _It is used in our project mainly to open the camera, display it in a resized fr
 MediaPipe has the ability to perceive the shape and movement of hands to enhance the user experience across a variety of domains and technology platforms. The program employs machine learning to infer 21 3D landmarks of a hand from a single frame. While current approaches rely primarily on powerful desktop environments for inference, this method achieves real-time performance on a computer or mobile, and even adapts to multiple hands.
 
 ###### 21 hand landmarks
-<img src="https://google.github.io/mediapipe/images/mobile/hand_landmarks.png" width="600" height="200">
+<img src="https://developers.google.com/static/mediapipe/images/solutions/hand-landmarks.png" width="600" height="200">
 
 ## [CV Zone](https://www.computervision.zone/)
 CVzone is a computer vision package that facilitates the execution of image processing and artificial intelligence functions. At its core it uses the OpenCV and Mediapipe libraries.
