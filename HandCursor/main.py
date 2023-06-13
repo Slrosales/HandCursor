@@ -5,17 +5,20 @@ from VirtualMouse import scr_settings as scs
 from VirtualMouse.HandTrackingModule import HandDetector
 from VirtualMouse.HandTrackingModule import Moves
 
-
 # Video settings
 screen = scs.Dimensions(pyautogui.size()[1], pyautogui.size()[0])
 camera = scs.Start()
 cap = camera.turn_video_on()
+
 screen_points = scs.ScreenPoints(x=screen.width, y=screen.height)
 
-options_window = scs.window_opt()
+# Command and action settings
+options_window = scs.WindowOpt()
 options_window.window.mainloop()
 acc_opt = options_window.selected_options
 print(acc_opt)
+moves_dic = options_window.configuracion
+print(moves_dic)
 
 # fps and delay settings
 time_v = scs.TimeV()
@@ -41,6 +44,11 @@ while True:
     if not success:
         pyautogui.alert("Esa camara no esta disponible", "ERROR")
         break
+
+    if delay != 0:
+        mode = 250
+    else:
+        mode = img.shape[1]
 
     # Image corrections
     cam_dim = scs.Dimensions(img.shape[0], img.shape[1])  # Cam dimensions
@@ -68,9 +76,9 @@ while True:
         yInd = int(np.interp(lmList[8][1], (XY_INI, XY_INI + area.height), (screen_points.y0, screen_points.y)))
 
         fingers = detector.fingers_up(hand)  # List of which fingers are up
-        moves.move_cursor(fingers, xInd, yInd, acc_opt[0])
+        moves.move_cursor(fingers, xInd, yInd, acc_opt, moves_dic)
         if BUTTON_PRESSED is False:
-            moves.finger_acc(cy, fingers, acc_opt)
+            moves.finger_acc(cy, fingers, acc_opt, mode, moves_dic)
             BUTTON_PRESSED = True
 
     # Button Pressed iterations

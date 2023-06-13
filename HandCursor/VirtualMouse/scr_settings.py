@@ -1,7 +1,23 @@
 import time
+from tkinter import messagebox
+
 import cv2
 import pyautogui
 import tkinter as tk
+
+
+# Global auxiliary variable containing the default values
+# of the possible actions that can be executed by the user.
+global aux
+aux = {
+    "move": [0, 1, 0, 0, 0],
+    "left click": [0, 0, 0, 0, 1],
+    "right click": [0, 0, 0, 1, 1],
+    "left arrow": [1, 0, 0, 0, 0],
+    "right arrow": [1, 1, 0, 0, 0],
+    "up arrow": [1, 1, 1, 0, 0],
+    "down arrow": [0, 1, 1, 0, 0]
+}
 
 
 class Dimensions:
@@ -72,9 +88,20 @@ class Start:
         return delay
 
 
-class window_opt:
+class WindowOpt:
     def __init__(self):
-        self.selected_options = []
+        # Editable dictionary
+        self.configuracion = {
+            "move": [0, 1, 0, 0, 0],
+            "left click": [0, 0, 0, 0, 1],
+            "right click": [0, 0, 0, 1, 1],
+            "left arrow": [1, 0, 0, 0, 0],
+            "right arrow": [1, 1, 0, 0, 0],
+            "up arrow": [1, 1, 1, 0, 0],
+            "down arrow": [0, 1, 1, 0, 0]
+        }
+        # Actions the user wants to execute
+        self.selected_options = {}
 
         # Create window
         self.window = tk.Tk()
@@ -82,11 +109,10 @@ class window_opt:
 
         # Align the window in the center of the screen.
         self.window_width = 350
-        self.window_height = 320
+        self.window_height = 300
 
         screen_width = self.window.winfo_screenwidth()
         screen_height =self. window.winfo_screenheight()
-
         x = (screen_width - self.window_width) // 2
         y = (screen_height - self.window_height) // 2
 
@@ -101,7 +127,7 @@ class window_opt:
         self.opt6 = tk.IntVar()
         self.opt7 = tk.IntVar()
 
-        # Crear checkboxes
+        # Create checkboxes
         opt1_cbox = tk.Checkbutton(self.window, text="Move the cursor", variable=self.opt1)
         opt2_cbox = tk.Checkbutton(self.window, text="Left click", variable=self.opt2)
         opt3_cbox = tk.Checkbutton(self.window, text="Right click", variable=self.opt3)
@@ -119,16 +145,141 @@ class window_opt:
         opt6_cbox.pack(anchor="w")
         opt7_cbox.pack(anchor="w")
 
+        # The text box opens allowing the user to configure the action command.
+        opt1_cbox.configure(command=lambda: self.activate_settings(0))
+        opt2_cbox.configure(command=lambda: self.activate_settings(1))
+        opt3_cbox.configure(command=lambda: self.activate_settings(2))
+        opt4_cbox.configure(command=lambda: self.activate_settings(3))
+        opt5_cbox.configure(command=lambda: self.activate_settings(4))
+        opt6_cbox.configure(command=lambda: self.activate_settings(5))
+        opt7_cbox.configure(command=lambda: self.activate_settings(6))
+
         # Button for processing selection
         process_button = tk.Button(self.window, text="Aceptar", command=self.process_selection)
         process_button.pack()
 
+    def activate_settings(self, index):
+        if index == 0 and self.opt1.get() == 1:
+            # Create an instance of the class HandSettings
+            HandSettings("move", self.configuracion, self.selected_options)
+        elif index == 1 and self.opt2.get() == 1:
+            HandSettings("left click", self.configuracion, self.selected_options)
+        elif index == 2 and self.opt3.get() == 1:
+            HandSettings("right click", self.configuracion, self.selected_options)
+        elif index == 3 and self.opt4.get() == 1:
+            HandSettings("left arrow", self.configuracion, self.selected_options)
+        elif index == 4 and self.opt5.get() == 1:
+            HandSettings("right arrow", self.configuracion, self.selected_options)
+        elif index == 5 and self.opt6.get() == 1:
+            HandSettings("up arrow", self.configuracion, self.selected_options)
+        elif index == 6 and self.opt7.get() == 1:
+            HandSettings("down arrow", self.configuracion, self.selected_options)
+
     def process_selection(self):
-        self.selected_options = [self.opt1.get(), self.opt2.get(), self.opt3.get(), self.opt4.get(), self.opt5.get(),
-                                 self.opt6.get(), self.opt7.get()]
+        # Dictionary with actions activated or not
+        self.selected_options = {"move": self.opt1.get(), "left click": self.opt2.get(), "right click": self.opt3.get(),
+                                 "left arrow": self.opt4.get(), "right arrow": self.opt5.get(),
+                                 "up arrow": self.opt6.get(), "down arrow": self.opt7.get()}
 
         # Close the window after processing the selection
         self.window.destroy()
+
+
+class HandSettings:
+    """
+    :param action: String of the action to which the command is to be modified
+    :param configuration: Dictionary with the command of each action
+    :param selected_options: Dictionary that tells whether the action is activated or not
+    """
+    def __init__(self, action, configuration, selected_options):
+
+        self.selected_options = selected_options
+        self.action = action
+        self.configuration = configuration
+
+        # Initial command list
+        self.command = [0, 0, 0, 0, 0]
+        self.finger_names = ["Pulgar", "Indice", "Medio", "Anular", "Meñique"]
+
+        # List for storing the text variables of the buttons
+        self.button_texts = []
+        # List to store the buttons
+        self.buttons = []
+
+        # Create window
+        self.window = tk.Tk()
+        self.window.title("Configuración de comandos")
+
+        # Align the window in the center of the screen.
+        self.window_width = 400
+        self.window_height = 200
+
+        screen_width = self.window.winfo_screenwidth()
+        screen_height =self. window.winfo_screenheight()
+
+        x = (screen_width - self.window_width) // 2
+        y = (screen_height - self.window_height) // 2
+
+        self.window.geometry(f"{self.window_width}x{self.window_height}+{x}+{y}")
+
+        # Create buttons and labels and add them to the window
+        for i in range(len(self.command)):
+            # Variable de texto para el botón
+            text = tk.StringVar()
+            text.set("OFF")
+
+            # Create button with the value of the gesture list as text
+            button = tk.Button(self.window, textvariable=text, width=5, height=2,
+                               command=lambda index=i: self.toggle_value(index))
+            button.grid(row=1, column=i, padx=2, pady=2)
+
+            # The background color of the button is set according to the initial value of the gesture list.
+            if self.command[i] == 0: # OFF
+                button.config(bg="red")
+            else: # ON
+                button.config(bg="green")
+
+            # Text variable is added to the list
+            self.button_texts.append(text)
+
+            # The button is added to the list
+            self.buttons.append(button)
+
+            # The name of each finger is placed under the respective button.
+            label = tk.Label(self.window, text=self.finger_names[i])
+            label.grid(row=0, column=i, padx=5)
+
+        accept_button = tk.Button(self.window, text="Aceptar", command=self.accept_selection)
+        accept_button.grid(row=2, column=0, padx=5, pady=10)
+
+        default_button = tk.Button(self.window, text="Predeterminado", command=self.set_default)
+        default_button.grid(row=2, column=1, padx=5, pady=10)
+
+        self.window.mainloop()
+
+    # Function to change the value in the gesture list when a button is pressed
+    def toggle_value(self, index):
+        if self.command[index] == 0:
+            self.command[index] = 1
+            self.button_texts[index].set("ON")
+            self.buttons[index].config(bg="green")
+        else:
+            self.command[index] = 0
+            self.button_texts[index].set("OFF")
+            self.buttons[index].config(bg="red")
+
+    # Button "Aceptar"
+    def accept_selection(self):
+        # The key is updated with a new command value
+        self.configuration[self.action] = self.command
+        self.window.destroy()
+
+    # button "Prederterminado"
+    def set_default(self):
+        # The selected action returns to the initial command
+        self.configuration[self.action] = aux[self.action]
+        self.window.destroy()
+
 
 
 

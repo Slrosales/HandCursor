@@ -162,54 +162,57 @@ class Moves:
     def __init__(self):
         pass
 
-    def move_cursor(self, fingers, x_ind, y_ind, bool):
+    def move_cursor(self, fingers, x_ind, y_ind, act, dic):
         """
             If index finger is up, the cursor will move
             :param fingers: List of which fingers are up
             :param x_ind: x-coordinate of linear interpolation
             :param y_ind: y-coordinate of linear interpolation
-            :param bool: active or not active the action
+            :param act: active or not active the action
         """
-        if fingers == [0, 1, 0, 0, 0] and bool == 1:
+        if fingers == dic["move"] and act["move"] == 1:
             # print("move")
             pyautogui.moveTo(x_ind, y_ind)
 
-    def finger_acc(self, cy, fingers, bool):
+    def finger_acc(self, cy, fingers, act, mode, dic):
         """
             Depending on the fingers that are raised,
             a mouse or keyboard action will be executed.
             :param cy: y-coordinate of the center point of the hand
             :param fingers: List of which fingers are up
-            :param bool: active or not active the action
+            :param act: active or not active the action
+            :param mode: game or slide
         """
-        if cy <= 250:  # if hand is at the height of the face
+
+
+        if cy <= mode:  # if hand is at the height of the face
             # left clic is pressed
-            if fingers == [0, 0, 0, 0, 1] and bool[1] == 1:
+            if fingers == dic['left click'] and act['left click'] == 1:
                 # print("Left click")
                 pyautogui.click()
 
             # right clic is pressed
-            if fingers == [0, 0, 0, 1, 1] and bool[2] == 1:
+            if fingers == dic["right click"] and act["right click"] == 1:
                 # print("Right click")
                 pyautogui.click(button='right')
 
             # key left pressed
-            if fingers == [1, 0, 0, 0, 0] and bool[3] == 1:
+            if fingers == dic["left arrow"] and act["left arrow"] == 1:
                 # print("Left")
                 pyautogui.press('left')
 
             # key right pressed
-            if fingers == [1, 1, 0, 0, 0] and bool[4] == 1:
+            if fingers == dic["right arrow"] and act["right arrow"] == 1:
                 # print("Right")
                 pyautogui.press('right')
 
             # key up pressed
-            if fingers == [1, 1, 1, 0, 0] and bool[5] == 1:
+            if fingers == dic["up arrow"] and act["up arrow"] == 1:
                 # print("Up")
                 pyautogui.press('up')
 
                 # key down pressed
-            if fingers == [0, 1, 1, 0, 0] and bool[6] == 1:
+            if fingers == dic["down arrow"] and act["down arrow"] == 1:
                 # print("Down")
                 pyautogui.press('down')
 
@@ -225,7 +228,7 @@ def main():
         # Get image frame
         success, img = cap.read()
         # Find the hand and its landmarks
-        hands, img = detector.find_hands(img)  # with draw
+        hands, img = detector.findHands(img)  # with draw
         # hands = detector.findHands(img, draw=False)  # without draw
 
         if hands:
@@ -236,7 +239,7 @@ def main():
             centerPoint1 = hand1['center']  # center of the hand cx,cy
             handType1 = hand1["type"]  # Handtype Left or Right
 
-            fingers1 = detector.fingers_up(hand1)
+            fingers1 = detector.fingersUp(hand1)
 
             if len(hands) == 2:
                 # Hand 2
@@ -246,10 +249,10 @@ def main():
                 centerPoint2 = hand2['center']  # center of the hand cx,cy
                 handType2 = hand2["type"]  # Hand Type "Left" or "Right"
 
-                fingers2 = detector.fingers_up(hand2)
+                fingers2 = detector.fingersUp(hand2)
 
                 # Find Distance between two Landmarks. Could be same hand or different hands
-                length, info, img = detector.find_distance(lmList1[8][0:2], lmList2[8][0:2], img)  # with draw
+                length, info, img = detector.findDistance(lmList1[8][0:2], lmList2[8][0:2], img)  # with draw
                 # length, info = detector.findDistance(lmList1[8], lmList2[8])  # with draw
         # Display
         cv2.imshow("Image", img)
