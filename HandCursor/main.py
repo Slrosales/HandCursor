@@ -16,9 +16,7 @@ screen_points = scs.ScreenPoints(x=screen.width, y=screen.height)
 options_window = scs.WindowOpt()
 options_window.window.mainloop()
 acc_opt = options_window.selected_options
-print(acc_opt)
-moves_dic = options_window.configuracion
-print(moves_dic)
+moves_dic = options_window.configuration
 
 # fps and delay settings
 time_v = scs.TimeV()

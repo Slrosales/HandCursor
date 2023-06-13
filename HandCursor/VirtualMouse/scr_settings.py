@@ -91,7 +91,7 @@ class Start:
 class WindowOpt:
     def __init__(self):
         # Editable dictionary
-        self.configuracion = {
+        self.configuration = {
             "move": [0, 1, 0, 0, 0],
             "left click": [0, 0, 0, 0, 1],
             "right click": [0, 0, 0, 1, 1],
@@ -161,19 +161,19 @@ class WindowOpt:
     def activate_settings(self, index):
         if index == 0 and self.opt1.get() == 1:
             # Create an instance of the class HandSettings
-            HandSettings("move", self.configuracion, self.selected_options)
+            HandSettings("move", self.configuration, self.selected_options)
         elif index == 1 and self.opt2.get() == 1:
-            HandSettings("left click", self.configuracion, self.selected_options)
+            HandSettings("left click", self.configuration, self.selected_options)
         elif index == 2 and self.opt3.get() == 1:
-            HandSettings("right click", self.configuracion, self.selected_options)
+            HandSettings("right click", self.configuration, self.selected_options)
         elif index == 3 and self.opt4.get() == 1:
-            HandSettings("left arrow", self.configuracion, self.selected_options)
+            HandSettings("left arrow", self.configuration, self.selected_options)
         elif index == 4 and self.opt5.get() == 1:
-            HandSettings("right arrow", self.configuracion, self.selected_options)
+            HandSettings("right arrow", self.configuration, self.selected_options)
         elif index == 5 and self.opt6.get() == 1:
-            HandSettings("up arrow", self.configuracion, self.selected_options)
+            HandSettings("up arrow", self.configuration, self.selected_options)
         elif index == 6 and self.opt7.get() == 1:
-            HandSettings("down arrow", self.configuracion, self.selected_options)
+            HandSettings("down arrow", self.configuration, self.selected_options)
 
     def process_selection(self):
         # Dictionary with actions activated or not
